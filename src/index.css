@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-purple-900 via-blue-900 to-green-900 text-white font-sans;
+    @apply min-h-screen;
+  }
+  
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+@layer components {
+  .aurora-gradient {
+    @apply bg-gradient-to-r from-blue-400 via-purple-500 to-green-400;
+  }
+  
+  .cosmic-glow {
+    @apply shadow-lg shadow-purple-500/25;
+  }
+  
+  .consciousness-pulse {
+    @apply animate-pulse;
+  }
+  
+  .breathing-element {
+    @apply animate-pulse;
+  }
+  
+  .floating-element {
+    @apply animate-bounce;
+  }
+  
+  .glowing-element {
+    @apply animate-pulse;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+  
+  .consciousness-border {
+    @apply border-2 border-green-400/50;
+  }
+  
+  .healing-border {
+    @apply border-2 border-red-400/50;
+  }
+}
