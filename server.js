@@ -30,7 +30,45 @@ app.use(cors({
 app.use(express.json())
 
 // Serve static files from the React app build directory
-app.use(express.static(path.join(__dirname, 'dist')))
+// Check if dist directory exists, if not, create a simple fallback
+const distPath = path.join(__dirname, 'dist')
+const fs = require('fs')
+
+if (fs.existsSync(distPath)) {
+  app.use(express.static(distPath))
+} else {
+  console.log('⚠️  Warning: dist directory not found. Make sure to run "npm run build" first.')
+  // Serve a simple fallback page
+  app.get('*', (req, res) => {
+    res.send(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Sacred Steps - Building...</title>
+          <style>
+            body { 
+              font-family: Arial, sans-serif; 
+              text-align: center; 
+              padding: 50px;
+              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+              color: white;
+            }
+            .container { max-width: 600px; margin: 0 auto; }
+            h1 { color: #ffd700; }
+            .loading { font-size: 18px; margin: 20px 0; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1>🌸 Sacred Steps: Territory of Consciousness</h1>
+            <div class="loading">Building the sacred app... Please wait a moment.</div>
+            <p>If this persists, please check the build process.</p>
+          </div>
+        </body>
+      </html>
+    `)
+  })
+}
 
 // Game state
 const gameState = {
@@ -170,13 +208,37 @@ app.get('/api/health', (req, res) => {
 })
 
 // Catch-all handler: send back React's index.html file for any non-API routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
-})
+// Only apply this if dist directory exists
+if (fs.existsSync(distPath)) {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+  })
+}
 
 const PORT = process.env.PORT || 3001
 server.listen(PORT, () => {
   console.log('🌸 Sacred Steps Server running on port', PORT)
   console.log('🌸 Consciousness-aware multiplayer ready!')
-  console.log('🌸 Serving React app from dist/ directory')
+  if (fs.existsSync(distPath)) {
+    console.log('🌸 Serving React app from dist/ directory')
+  } else {
+    console.log('⚠️  Serving fallback page - dist directory not found')
+  }
+})
+
+// Handle server errors
+server.on('error', (error) => {
+  console.error('🌸 Server error:', error)
+  process.exit(1)
+})
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('🌸 Uncaught Exception:', error)
+  process.exit(1)
+})
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('🌸 Unhandled Rejection at:', promise, 'reason:', reason)
+  process.exit(1)
 })
