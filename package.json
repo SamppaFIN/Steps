@@ -17,7 +17,7 @@
     "axios": "^1.6.0",
     "clsx": "^2.1.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
+    "express": "^4.18.2",
     "framer-motion": "^11.0.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.400.0",
@@ -28,7 +28,13 @@
     "socket.io": "^4.8.1",
     "socket.io-client": "^4.7.2",
     "tailwind-merge": "^2.2.0",
-    "zustand": "^4.5.0"
+    "zustand": "^4.5.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.5.0",
+    "vite": "^5.4.0"
   },
   "devDependencies": {
     "@types/leaflet": "^1.9.8",
@@ -36,13 +42,7 @@
     "@types/react-dom": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^7.0.0",
     "@typescript-eslint/parser": "^7.0.0",
-    "@vitejs/plugin-react": "^4.3.0",
-    "autoprefixer": "^10.4.0",
     "eslint": "^8.57.0",
-    "postcss": "^8.4.0",
-    "tailwindcss": "^3.4.0",
-    "typescript": "^5.5.0",
-    "vite": "^5.4.0",
     "vitest": "^1.6.0"
   },
   "keywords": [
@@ -54,5 +54,9 @@
     "sacred-steps"
   ],
   "author": "Aurora & Infinite",
-  "license": "MIT"
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
 }

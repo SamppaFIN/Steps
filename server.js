@@ -203,7 +203,18 @@ app.get('/api/health', (req, res) => {
     status: 'healthy', 
     players: gameState.players.size,
     territories: gameState.territories.size,
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    distExists: fs.existsSync(distPath)
+  })
+})
+
+// Simple test endpoint
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    message: '🌸 Sacred Steps Server is running!',
+    timestamp: new Date().toISOString(),
+    nodeVersion: process.version,
+    platform: process.platform
   })
 })
 
