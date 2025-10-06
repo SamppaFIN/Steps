@@ -26,7 +26,11 @@ export function MultiplayerProvider({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     // Initialize socket connection
-    const newSocket = io('ws://localhost:3001', {
+    const socketUrl = process.env.NODE_ENV === 'production' 
+      ? window.location.origin 
+      : 'http://localhost:3001'
+    
+    const newSocket = io(socketUrl, {
       transports: ['websocket'],
       autoConnect: true,
     })

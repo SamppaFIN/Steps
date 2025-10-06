@@ -2,18 +2,35 @@ const express = require('express')
 const http = require('http')
 const socketIo = require('socket.io')
 const cors = require('cors')
+const path = require('path')
 
 const app = express()
 const server = http.createServer(app)
+
+// CORS configuration for production
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://steps-5b428851bffc.herokuapp.com',
+  'https://steps-5b428851bffc.herokuapp.com/',
+  process.env.FRONTEND_URL
+].filter(Boolean)
+
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST"]
+    origin: allowedOrigins,
+    methods: ["GET", "POST"],
+    credentials: true
   }
 })
 
-app.use(cors())
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}))
 app.use(express.json())
+
+// Serve static files from the React app build directory
+app.use(express.static(path.join(__dirname, 'dist')))
 
 // Game state
 const gameState = {
@@ -152,8 +169,14 @@ app.get('/api/health', (req, res) => {
   })
 })
 
+// Catch-all handler: send back React's index.html file for any non-API routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'))
+})
+
 const PORT = process.env.PORT || 3001
 server.listen(PORT, () => {
   console.log('🌸 Sacred Steps Server running on port', PORT)
   console.log('🌸 Consciousness-aware multiplayer ready!')
+  console.log('🌸 Serving React app from dist/ directory')
 })
